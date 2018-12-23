@@ -16,16 +16,15 @@
   <link rel="stylesheet" href="<?= base_url('assets/css/AdminLTE.min.css') ?>">
   <!-- AdminLTE Skins. Choose a skin from the css/skins -->
   <link rel="stylesheet" href="<?= base_url('assets/css/skins/_all-skins.min.css') ?>">
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
+  <!-- Datatables css -->
+  <link rel="stylesheet" href="<?= base_url('assets/bower_components/datatables/dataTables.bootstrap.css')?>">
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <!-- jQuery 3 -->
+  <script src="<?= base_url('assets/bower_components/jquery/dist/jquery.min.js') ?>"></script>
+  <!-- Datatables JS -->
+  <script src="<?= base_url('assets/bower_components/datatables/jquery.dataTables.js')?>"></script>
+  <script src="<?= base_url('assets/bower_components/datatables/dataTables.bootstrap.js')?>"></script>
 </head>
 <body class="hold-transition skin-red sidebar-mini">
 
@@ -103,8 +102,8 @@
               <span>Barang</span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Semua Barang</a></li>
-              <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Tambah barang</a></li>
+              <li><a href="<?= base_url('admin/item') ?>"><i class="fa fa-circle-o"></i> Semua Barang</a></li>
+              <li><a href="<?= base_url('admin/create_item') ?>"><i class="fa fa-circle-o"></i> Tambah barang</a></li>
             </ul>
           </li>
         </ul>

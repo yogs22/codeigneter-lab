@@ -7,7 +7,7 @@ class M_admin extends CI_Model {
 	}
 
 	public function where($table, $where){
-		return $this->db->get_where($table, $where);
+		return $this->db->get_where($table, $where)->row();
 	}
 
 	public function insert($table, $data)

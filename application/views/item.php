@@ -68,30 +68,5 @@
 				"type" : "POST"
 			}
 		});
-
-    function delete_by(id){
-        if(confirm('Yakin Akan Menghapus Data ?')){
-            $.ajax({
-                url : "<?= base_url('admin/delete_item')?>/"+id,
-                type: "POST",
-                success: function(data){
-                    if (data == "ok") {
-                      var msg ="Sukses Menghapus Data!!";
-                      setTimeout(function(){
-                          $('.alert').removeClass('alert-danger').addClass('alert-success').fadeIn().html(msg).delay(4000).fadeOut();
-                      }, 1700);
-                    }else{
-                      var msg ="Gagal Menghapus Data!!";
-                      setTimeout(function(){
-                          $('.alert').removeClass('alert-success').addClass('alert-danger').fadeIn().html(msg).delay(4000).fadeOut();
-                        }, 1700);
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown){
-                    alert('Data Gagal Diproses !! Ada Kesalahan Sistem');
-                }
-            });
-        }
-    }
 	});
 </script>

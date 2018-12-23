@@ -29,7 +29,7 @@ class Admin extends CI_Controller{
 		$this->datatables->add_column('action',
 		'
 		<a data-toggle="tooltip" data-original-title="Edit" class="btn btn-success btn-sm" href="'. base_url('admin/edit_item/$1') .'"><i class="glyphicon glyphicon-edit"></i></a>
-		<button type="button" data-toggle="tooltip" data-original-title="Hapus" class="btn btn-danger btn-sm" onclick="delete_by($1)"><i class="glyphicon glyphicon-trash"></i></button>
+		<a data-toggle="tooltip" data-original-title="Hapus" class="btn btn-danger btn-sm" onclick="return confirm(\'Yakin akan menghapus data ?\')" href="'. base_url('admin/delete_item/$1') .'"><i class="glyphicon glyphicon-trash"></i></button>
 		 ',
 		 'id');
 		$this->datatables->from('ci_items');
@@ -53,17 +53,45 @@ class Admin extends CI_Controller{
 		$insert = $this->M_admin->insert('ci_items', $this);
 
 		if ($insert) {
-			redirect(base_url('admin/item'));
 			$this->session->set_flashdata('success', 'Berhasil disimpan');
+			redirect(base_url('admin/item'));
+		}
+	}
+
+	public function edit_item($id)
+	{
+		$custom['item'] = $this->M_admin->where('ci_items', array('id' => $id));
+		$custom['categories'] = $this->M_admin->get('ci_categories');
+
+		$this->libraries->load('edit_item', $custom);
+	}
+
+	public function update_item($id)
+	{
+		$post = $this->input->post();
+		$this->name = $post['name'];
+		$this->id_category = $post['category'];
+		$this->price = $post['price'];
+		$this->description = $post['description'];
+		$update = $this->M_admin->update('ci_items', array('id' => $id), $this);
+
+		if (!empty($_FILES['image']['name'])) {
+			$this->image = $this->M_admin->uploadImage();
+		} 
+
+		if ($update) {
+			$this->session->set_flashdata('success', 'Berhasil update');
+			redirect(base_url('admin/item'));
 		}
 	}
 
 	public function delete_item($id)
 	{
 		$where = array('id' => $id);
-		$sql = $this->M_admin->delete('warga', $where);
-		if ($sql) {
-			echo "ok";
+		$delete = $this->M_admin->delete('ci_items', $where);
+		if ($delete) {
+			$this->session->set_flashdata('success', 'Berhasil menghapus data');
+			redirect(base_url('admin/item'));
 		} else {
 			echo "gagal ";
 		}

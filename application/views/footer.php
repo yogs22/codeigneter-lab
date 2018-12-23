@@ -20,8 +20,6 @@
      immediately after the control sidebar -->
 <div class="control-sidebar-bg"></div>
 </div>
-<!-- ./wrapper -->
-
 <!-- Bootstrap 3.3.7 -->
 <script src="<?= base_url('assets/bower_components/bootstrap/dist/js/bootstrap.min.js') ?>"></script>
 <!-- FastClick -->

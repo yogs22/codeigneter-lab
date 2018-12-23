@@ -31,11 +31,12 @@ class Login extends CI_Controller {
 
 				$cek = $this->M_login->login($where);
 				if($cek->num_rows() > 0){
-						foreach ($cek->result_array() as $key) {
+						foreach ($cek->result_array() as $val) {
 								$data_session = array(
-										'email' => $key['email'],
-										'username' => $key['username'],
-										'id_user' => $key['id'],
+										'name' => $val['name'],
+										'email' => $val['email'],
+										'username' => $val['username'],
+										'id_user' => $val['id'],
 										'status' => 'logged_in'
 								);
 						}

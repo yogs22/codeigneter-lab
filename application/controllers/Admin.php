@@ -14,6 +14,12 @@ class Admin extends CI_Controller{
 
 		public function index()
 		{
-				$this->load->view('admin');
+				$data['name'] = $this->session->userdata('name');
+				$this->libraries->load('home', $data);
+		}
+
+		public function item()
+		{
+				$this->libraries->load('item');
 		}
 }

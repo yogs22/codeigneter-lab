@@ -18,8 +18,11 @@
 		</div>
 	  <!-- /.login-logo -->
 		<div class="login-box-body">
-		    <p class="login-box-msg">Sign in to start your session</p>
-			<form action="<?php echo base_url('login/do_login'); ?>" method="post">		
+		  <p class="login-box-msg">Sign in to start your session</p>
+			<?php if ($msg) { ?>
+					<div class="alert alert-danger"><?= $msg ?></div>
+			<?php } ?>
+			<form action="<?php echo base_url('login/do_login'); ?>" method="post">
 				<div class="form-group has-feedback">
 			        <input type="email" class="form-control" name="email" placeholder="Email">
 			        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>

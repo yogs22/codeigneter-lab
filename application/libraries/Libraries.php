@@ -11,12 +11,12 @@ Class Libraries {
 				return $pass;
 		}
 
-		public function load($content)
+		public function load($content, $custom = '')
 		{
 				$data['name'] = $this->gi->session->userdata('name');
 
 				$this->gi->load->view('header', $data);
-				$this->gi->load->view($content, $data);
+				$this->gi->load->view($content, $custom);
 				$this->gi->load->view('footer', $data);
 		}
 }

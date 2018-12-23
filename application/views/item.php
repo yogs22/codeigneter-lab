@@ -14,11 +14,17 @@
 
     <!-- Main content -->
     <section class="content">
+      <div class="alert" style="display: none"></div>
+      <?php if ($this->session->flashdata('success')): ?>
+				<div class="alert alert-success" role="alert">
+					<?php echo $this->session->flashdata('success'); ?>
+				</div>
+			<?php endif; ?>
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Hover Data Table</h3>
+                <a href="<?= base_url('admin/create_item') ?>" class="btn btn-primary right">Tambah Barang</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -60,8 +66,32 @@
 			"ajax" : {
 				"url" : "<?= base_url('admin/item_json') ?>",
 				"type" : "POST"
-			},
-
+			}
 		});
+
+    function delete_by(id){
+        if(confirm('Yakin Akan Menghapus Data ?')){
+            $.ajax({
+                url : "<?= base_url('admin/delete_item')?>/"+id,
+                type: "POST",
+                success: function(data){
+                    if (data == "ok") {
+                      var msg ="Sukses Menghapus Data!!";
+                      setTimeout(function(){
+                          $('.alert').removeClass('alert-danger').addClass('alert-success').fadeIn().html(msg).delay(4000).fadeOut();
+                      }, 1700);
+                    }else{
+                      var msg ="Gagal Menghapus Data!!";
+                      setTimeout(function(){
+                          $('.alert').removeClass('alert-success').addClass('alert-danger').fadeIn().html(msg).delay(4000).fadeOut();
+                        }, 1700);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown){
+                    alert('Data Gagal Diproses !! Ada Kesalahan Sistem');
+                }
+            });
+        }
+    }
 	});
 </script>

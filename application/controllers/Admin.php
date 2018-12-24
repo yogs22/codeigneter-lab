@@ -2,11 +2,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Controller{
+	private $table = 'ci_items';
+
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('M_admin');
-		$this->load->library(array('libraries', 'datatables', 'form_validation'));
+		$this->load->library(array('libraries', 'datatables', 'form_validation', 'user_agent'));
+		$this->load->helper('security');
 		if(!$this->session->userdata('status') == 'logged_in') {
     		redirect(base_url('login'));
     }
@@ -16,6 +19,10 @@ class Admin extends CI_Controller{
 	{
 		$this->libraries->load('home');
 	}
+
+	/*
+	 * Item Controller Method
+	 */
 
 	public function item()
 	{
@@ -32,9 +39,40 @@ class Admin extends CI_Controller{
 		<a data-toggle="tooltip" data-original-title="Hapus" class="btn btn-danger btn-sm" onclick="return confirm(\'Yakin akan menghapus data ?\')" href="'. base_url('admin/delete_item/$1') .'"><i class="glyphicon glyphicon-trash"></i></button>
 		 ',
 		 'id');
-		$this->datatables->from('ci_items');
+		$this->datatables->from($this->table);
 
 		echo $this->datatables->generate();
+	}
+
+	public function item_rules()
+	{
+		return [
+			[
+				'field' => 'name',
+				'label' => 'Name',
+				'rules' => 'trim|required|xss_clean'
+			],
+			[
+				'field' => 'category',
+				'label' => 'Category',
+				'rules' => 'trim|required|xss_clean'
+			],
+			[
+				'field' => 'price',
+				'label' => 'Price',
+				'rules' => 'trim|required|xss_clean'
+			],
+			[
+				'field' => 'description',
+				'label' => 'Description',
+				'rules' => 'trim|required|xss_clean'
+			],
+			[
+				'field' => 'price',
+				'label' => 'Price',
+				'rules' => 'trim|required|numeric|xss_clean'
+			],
+		];
 	}
 
 	public function create_item()
@@ -45,22 +83,30 @@ class Admin extends CI_Controller{
 
 	public function store_item() {
 		$post = $this->input->post();
+
 		$this->name = $post['name'];
 		$this->id_category = $post['category'];
 		$this->price = $post['price'];
 		$this->description = $post['description'];
 		$this->image = $this->M_admin->uploadImage();
-		$insert = $this->M_admin->insert('ci_items', $this);
 
-		if ($insert) {
-			$this->session->set_flashdata('success', 'Berhasil disimpan');
-			redirect(base_url('admin/item'));
+		$validation = $this->form_validation;
+		$validation->set_rules($this->item_rules());
+
+		if ($validation->run()) {
+			$insert = $this->M_admin->insert($this->table, $this);
+			if ($insert) {
+				$this->session->set_flashdata('success', 'Berhasil disimpan');
+				redirect(base_url('admin/item'));
+			}
+		} else {
+				redirect($this->agent->referrer());
 		}
 	}
 
 	public function edit_item($id)
 	{
-		$custom['item'] = $this->M_admin->where('ci_items', array('id' => $id));
+		$custom['item'] = $this->M_admin->where($this->table, array('id' => $id));
 		$custom['categories'] = $this->M_admin->get('ci_categories');
 
 		$this->libraries->load('edit_item', $custom);
@@ -69,26 +115,34 @@ class Admin extends CI_Controller{
 	public function update_item($id)
 	{
 		$post = $this->input->post();
+
 		$this->name = $post['name'];
 		$this->id_category = $post['category'];
 		$this->price = $post['price'];
 		$this->description = $post['description'];
-		$update = $this->M_admin->update('ci_items', array('id' => $id), $this);
+
+		$validation = $this->form_validation;
+		$validation->set_rules($this->item_rules());
 
 		if (!empty($_FILES['image']['name'])) {
 			$this->image = $this->M_admin->uploadImage();
-		} 
+		}
 
-		if ($update) {
-			$this->session->set_flashdata('success', 'Berhasil update');
-			redirect(base_url('admin/item'));
+		if ($validation->run()) {
+			$update = $this->M_admin->update($this->table, array('id' => $id), $this);
+			if ($update) {
+				$this->session->set_flashdata('success', 'Berhasil update');
+				redirect(base_url('admin/item'));
+			}
+		} else {
+			redirect($this->agent->referrer());
 		}
 	}
 
 	public function delete_item($id)
 	{
 		$where = array('id' => $id);
-		$delete = $this->M_admin->delete('ci_items', $where);
+		$delete = $this->M_admin->delete($this->table, $where);
 		if ($delete) {
 			$this->session->set_flashdata('success', 'Berhasil menghapus data');
 			redirect(base_url('admin/item'));

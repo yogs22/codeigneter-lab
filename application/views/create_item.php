@@ -27,27 +27,42 @@
             <div class="box-body">
               <div class="form-group">
                 <label for="name">Nama</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan nama barang" required>
+                <input type="text" class="form-control <?= form_error('name') ? 'is-invalid':'' ?>" id="name" name="name" placeholder="Masukkan nama barang" required>
+                <div class="invalid-feedback">
+									<?= form_error('name') ?>
+								</div>
               </div>
               <div class="form-group">
                 <label for="category">Kategori</label>
-                <select class="form-control" id="category" name="category" required>
+                <select class="form-control <?= form_error('category') ? 'is-invalid':'' ?>" id="category" name="category" required>
                   <?php foreach($categories as $category) { ?>
                     <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
                   <?php } ?>
                 </select>
+                <div class="invalid-feedback">
+									<?= form_error('category') ?>
+								</div>
               </div>
               <div class="form-group">
                 <label for="price">Harga</label>
-                <input type="number" class="form-control" id="price" name="price" placeholder="Masukkan harga barang">
+                <input type="number" class="form-control <?= form_error('price') ? 'is-invalid':'' ?>" id="price" name="price" min="0" placeholder="Masukkan harga barang">
+                <div class="invalid-feedback">
+									<?= form_error('price') ?>
+								</div>
               </div>
               <div class="form-group">
                 <label for="description">Deskripsi</label>
-                <textarea class="form-control" id="description" name="description" required></textarea>
+                <textarea class="form-control <?= form_error('description') ? 'is-invalid':'' ?>" id="description" name="description" required></textarea>
+                <div class="invalid-feedback">
+									<?= form_error('description') ?>
+								</div>
               </div>
               <div class="form-group">
                 <label for="image">Gambar</label>
-                <input type="file" name="image" id="image" required>
+                <input class="form-control-file <?= form_error('image') ? 'is-invalid':'' ?>" type="file" name="image" id="image" accept="image/*" required>
+                <div class="invalid-feedback">
+									<?= form_error('image') ?>
+								</div>
               </div>
             <!-- /.box-body -->
 

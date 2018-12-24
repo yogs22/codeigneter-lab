@@ -32,14 +32,17 @@ class Admin extends CI_Controller{
 	public function item_json()
 	{
 		header('Content-Type: application/json');
-		$this->datatables->select('id,name,id_category,price,description,image');
+		$this->datatables->select('ci_items.id,ci_items.name,ci_categories.name as category_name,ci_items.price,ci_items.description,ci_items.image');
+		$this->datatables->edit_column('image','<img src="'.base_url().'/upload/$1" class="img-responsive">', 'image');
 		$this->datatables->add_column('action',
 		'
 		<a data-toggle="tooltip" data-original-title="Edit" class="btn btn-success btn-sm" href="'. base_url('admin/edit_item/$1') .'"><i class="glyphicon glyphicon-edit"></i></a>
 		<a data-toggle="tooltip" data-original-title="Hapus" class="btn btn-danger btn-sm" onclick="return confirm(\'Yakin akan menghapus data ?\')" href="'. base_url('admin/delete_item/$1') .'"><i class="glyphicon glyphicon-trash"></i></button>
 		 ',
 		 'id');
+
 		$this->datatables->from($this->table);
+		$this->datatables->join('ci_categories', ''.$this->table.'.id_category = ci_categories.id');
 
 		echo $this->datatables->generate();
 	}

@@ -21,7 +21,7 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <!-- jQuery 3 -->
-  <script src="<?= base_url('assets/bower_components/jquery/dist/jquery.min.js') ?>"></script>
+  <script src="<?= base_url('assets/bower_components/jquery/dist/jquery.js') ?>"></script>
   <!-- Datatables JS -->
   <script src="<?= base_url('assets/bower_components/datatables/jquery.dataTables.js')?>"></script>
   <script src="<?= base_url('assets/bower_components/datatables/dataTables.bootstrap.js')?>"></script>

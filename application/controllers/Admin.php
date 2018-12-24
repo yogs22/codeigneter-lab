@@ -141,13 +141,13 @@ class Admin extends CI_Controller{
 
 	public function delete_item($id)
 	{
-		$where = array('id' => $id);
-		$delete = $this->M_admin->delete($this->table, $where);
+		$delete = $this->M_admin->delete($this->table, array('id' => $id));
 		if ($delete) {
 			$this->session->set_flashdata('success', 'Berhasil menghapus data');
 			redirect(base_url('admin/item'));
 		} else {
-			echo "gagal ";
+			echo "<script>alert('Gagal !')</script>";
+			redirect(base_url('admin/item'));
 		}
 	}
 }

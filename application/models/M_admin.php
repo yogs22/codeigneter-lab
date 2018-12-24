@@ -34,16 +34,17 @@ class M_admin extends CI_Model {
 
 	public function uploadImage()
 	{
-	    $config['upload_path']      = './upload/';
-	    $config['allowed_types']    = 'gif|jpg|png';
-	    $config['file_name']        = rand(1,1000);
-	    $config['overwrite']				= true;
-	    $config['max_size']         = 1024; // 1MB
+    $config['upload_path']      = './upload/';
+    $config['allowed_types']    = 'gif|jpg|png';
+    $config['file_name']        = rand(1,1000);
+    $config['overwrite']				= true;
+    $config['max_size']         = 1024; // 1MB
 
-	    $this->load->library('upload', $config);
+    $this->load->library('upload', $config);
 
-	    if ($this->upload->do_upload('image')) {
-	        return $this->upload->data("file_name");
-	    }
+    if ($this->upload->do_upload('image')) {
+      return $this->upload->data("file_name");
+    }
 	}
+
 }

@@ -1,3 +1,8 @@
+<style media="screen">
+  .width {
+    width: 100px !important;
+  }
+</style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -36,7 +41,7 @@
                       <th>Kategori</th>
                       <th>Harga</th>
                       <th>Deskripsi</th>
-                      <th>Gambar</th>
+                      <th class="width">Gambar</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
